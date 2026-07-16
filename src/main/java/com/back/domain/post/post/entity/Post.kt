@@ -2,14 +2,26 @@ package com.back.domain.post.post.entity
 
 import com.back.domain.member.member.entity.Member
 import com.back.global.jpa.entity.BaseEntity
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.ManyToOne
+import jakarta.persistence.*
 
 @Entity
-class Post(// Post 가 많고(Many) Member 가 적다(One) // N:1 관계
-    // 필드명 : AUTHOR_ID, 설명 : MEMBER 테이블의 ID값이 저장
-    @field:ManyToOne private val author: Member?, private val title: String?, @field:Column(
-        columnDefinition = "TEXT"
-    ) private var content: String?
-) : BaseEntity() 
+class Post(
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id", nullable = false)
+    val author: Member,
+
+    @Column(nullable = false)
+    var title: String,
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    var content: String
+) : BaseEntity() {
+
+    fun update(newTitle: String, newContent: String) {
+        require(newTitle.isNotBlank()) { "제목은 비어있을 수 없습니다." }
+        require(newContent.isNotBlank()) { "본문은 비어있을 수 없습니다." }
+
+        this.title = newTitle
+        this.content = newContent
+    }
+}

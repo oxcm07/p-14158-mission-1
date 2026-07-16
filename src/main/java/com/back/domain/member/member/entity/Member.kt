@@ -14,4 +14,14 @@ class Member(
 
     @Column(nullable = false)
     var nickname: String
-) : BaseEntity()
+) : BaseEntity() {
+
+    fun updateNickname(newNickname: String) {
+        require(newNickname.isNotBlank()) { "닉네임은 빈 값일 수 없습니다." }
+        this.nickname = newNickname
+    }
+
+    fun changePassword(newPassword: String) {
+        this.password = newPassword
+    }
+}
