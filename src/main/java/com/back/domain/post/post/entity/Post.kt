@@ -7,7 +7,7 @@ import jakarta.persistence.*
 @Entity
 class Post(
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id", nullable = false)
+    @JoinColumn(nullable = false)
     val author: Member,
 
     title: String,
