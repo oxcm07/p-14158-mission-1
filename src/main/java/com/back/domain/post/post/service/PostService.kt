@@ -14,9 +14,7 @@ class PostService(
 ) {
     fun count(): Long = postRepository.count()
 
-    fun findById(id: Int): Post? {
-        return postRepository.findByIdOrNull(id)
-    }
+    fun findById(id: Int): Post? = postRepository.findByIdOrNull(id)
 
     @Transactional
     fun modify(post: Post, title: String, content: String) {

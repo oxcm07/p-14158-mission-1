@@ -10,17 +10,19 @@ class Post(
     @JoinColumn(name = "author_id", nullable = false)
     val author: Member,
 
-    @Column(nullable = false)
-    var title: String,
-
-    @Column(columnDefinition = "TEXT", nullable = false)
-    var content: String
+    title: String,
+    content: String
 ) : BaseEntity() {
+    @Column(nullable = false)
+    var title: String = title
+        protected set
+    @Column(columnDefinition = "TEXT", nullable = false)
+    var content: String = content
+        protected set
 
     fun update(newTitle: String, newContent: String) {
         require(newTitle.isNotBlank()) { "제목은 비어있을 수 없습니다." }
         require(newContent.isNotBlank()) { "본문은 비어있을 수 없습니다." }
-
         this.title = newTitle
         this.content = newContent
     }
